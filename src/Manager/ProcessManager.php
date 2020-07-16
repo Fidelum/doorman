@@ -114,9 +114,9 @@ class ProcessManager implements Manager
             ));
 
             if ($task instanceof Process) {
-                $task->setId(array_pop($output));
-                foreach($output as $o)
-	                file_put_contents("php://stderr", $o);
+                $task->setId($output[0]);
+                foreach($output as $i => $o)
+	                file_put_contents("php://stderr", "[".$i."]: ".$o);
             }
 
             $this->running[] = $task;
