@@ -90,7 +90,7 @@ class ProcessManager implements Manager
             if ($this->isTaskCancelled($task)) {
                 continue;
             }
-            
+            /*
             if (!$this->canRunTask($task)) {
                 $waiting[] = $task;
                 continue;
@@ -99,7 +99,7 @@ class ProcessManager implements Manager
             if ($task->stopsSiblings()) {
                 $this->stopSiblingTasks($task);
             }
-
+						*/
             $binary = $this->getBinary();
             $worker = $this->getWorker();
             $stdout = $this->getStdOut();
@@ -112,6 +112,8 @@ class ProcessManager implements Manager
             $output = $this->getShell()->exec("{$binary} {$worker} %s {$stdout} {$stderr} & echo $!", array(
                 $this->getTaskString($task),
             ));
+
+            print_r($output);exit;
 
             if ($task instanceof Process) {
                 $task->setId(array_pop($output));
