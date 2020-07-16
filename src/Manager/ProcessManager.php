@@ -114,7 +114,9 @@ class ProcessManager implements Manager
             ));
 
             if ($task instanceof Process) {
-                $task->setId($output[0]);
+                $task->setId(array_pop($output));
+                foreach($output as $o)
+	                file_put_contents("php://stderr", $o);
             }
 
             $this->running[] = $task;
@@ -400,7 +402,7 @@ class ProcessManager implements Manager
             return ">> ".$this->getLogPath()."/stdout.log";
         }
 
-        return "> /dev/null";
+	      return "";
     }
 
     /**
@@ -434,7 +436,7 @@ class ProcessManager implements Manager
             return "2>> ".$this->getLogPath()."/stderr.log";
         }
 
-        return "2> /dev/null";
+        return "2>&1";
     }
 
     /**
